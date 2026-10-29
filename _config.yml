@@ -32,7 +32,9 @@ github:
 social:
   # 실제 이름과 연락처가 확인되기 전에는 공개용 브랜드만 사용합니다.
   name: yeon.w
-
+  links:
+    - /about/
+    - https://github.com/yeon-w
 
 # Page views settings
 pageviews:
