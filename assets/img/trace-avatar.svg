@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">TRACE.LOG</title>
+  <desc id="desc">A shield and signal trace on a dark grid</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1">
+      <stop stop-color="#15314b"/>
+      <stop offset="1" stop-color="#071323"/>
+    </linearGradient>
+    <linearGradient id="edge" x2="1" y2="1">
+      <stop stop-color="#78ead7"/>
+      <stop offset="1" stop-color="#3c9cae"/>
+    </linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#6ddfce" stroke-opacity=".12"/>
+    </pattern>
+  </defs>
+  <rect width="256" height="256" rx="38" fill="url(#bg)"/>
+  <rect width="256" height="256" rx="38" fill="url(#grid)"/>
+  <path d="M128 38 204 66v55c0 52-29 86-76 105-47-19-76-53-76-105V66z" fill="#0c2235" stroke="url(#edge)" stroke-width="7"/>
+  <path d="M74 139h36l14-34 18 47 11-21h29" fill="none" stroke="#7df1dd" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="74" cy="139" r="5" fill="#f9bd78"/>
+  <circle cx="182" cy="131" r="5" fill="#f9bd78"/>
+</svg>
