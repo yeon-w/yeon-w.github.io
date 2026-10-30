@@ -4,7 +4,7 @@ title: "ELF 보안 분석 툴 개발"
 date: 2026-10-29 00:00:00 +0900
 description: "사용자가 바이너리를 입력하면 자동으로 ELF 구조 / 보호 기법 / 취역 가능성을 분석해주는 CLI 보안 분석 도구"
 categories: ['개발']
-tags: [python, logging, security]
+tags: [C, logging, security]
 toc: true
 ---
 
