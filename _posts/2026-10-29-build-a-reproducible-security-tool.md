@@ -1,78 +1,29 @@
 ---
 layout: post
-title: "작게 만들고 검증하기: 보안 실습용 로그 요약기"
+title: "ELF 보안 분석 툴 개발"
 date: 2026-10-29 00:00:00 +0900
-description: "표준 라이브러리만으로 JSON Lines 로그를 요약하며, 보안 도구 개발에서 입력 검증과 재현성을 챙기는 방법을 정리합니다."
+description: "사용자가 바이너리를 입력하면 자동으로 ELF 구조 / 보호 기법 / 취역 가능성을 분석해주는 CLI 보안 분석 도구"
 categories: ['개발']
 tags: [python, logging, security]
 toc: true
 ---
 
-보안 도구를 만들 때는 화려한 기능보다 **입력이 무엇이고, 출력이 무엇이며, 실패하면 어떻게 되는지**가 먼저다. 아래는 외부 서비스에 접속하지 않고 로컬의 가상 로그만 읽는 작은 연습이다. 실제 시스템 로그에는 계정·IP·토큰이 들어갈 수 있으므로 공개 글에는 반드시 합성 데이터를 사용한다.
+CTF·포너블에서 바이너리를 분석할 때 파일 구조와 적용된 보호기법을 먼저 확인한다. 이 과정을 직접 구현하며 ELF 형식을 더 깊이 이해하고자 C로 보안 분석 도구 elfcat을 개발했다.
 
-## 입력과 기대 결과
+## 개발 환경
 
-한 줄에 JSON 객체 하나를 담은 `sample.jsonl`을 준비한다.
+Ubuntu 24.04.2를 VMware 64비트 가상머신에서 사용했다. C로 작성하고 gcc로 컴파일했으며, 디버깅에는 gdb, 분석 결과 검증에는 readelf를 사용했다.
 
-```json
-{"event":"login_failed","source":"web"}
-{"event":"login_failed","source":"web"}
-{"event":"login_success","source":"ssh"}
-```
+## 구현한 기능
 
-목표는 이벤트 종류별 개수를 출력하고, 깨진 줄은 몇 개였는지 별도로 알리는 것이다. 원본 행을 다시 출력하지 않아 불필요한 정보 노출도 줄인다.
+첫째, 입력한 ELF 파일의 구조를 파싱한다. 둘째, 분석에 필요한 보호기법(mitigation) 정보를 출력한다. 구조를 올바르게 읽는 것이 보호기법 결과를 해석하기 위한 출발점이므로, 파싱 결과는 readelf와 대조하며 확인했다.
 
-```python
-# summarize.py — Python 3 표준 라이브러리만 사용
-import argparse
-import json
-from collections import Counter
-from pathlib import Path
+보호기법이 적용되었는지 보여 주는 것과 파일에 취약점이 있는지 판정하는 것은 다른 일이다. elfcat의 현재 출력은 바이너리 초기 분석을 돕는 정보로 사용한다.
 
+## 다음 목표
 
-def summarize(path: Path) -> tuple[Counter, int]:
-    counts = Counter()
-    invalid = 0
+시간이 허락하면 취약 패턴 탐지를 먼저 추가할 계획이다. 탐지 결과에는 어떤 패턴을 근거로 표시했는지 함께 제시하고, 패턴만으로 취약점을 확정하지 않도록 할 것이다. 그다음에는 허가된 실습 환경에서 분석 과정을 정리하는 데 쓸 exploit 템플릿을 검토하려고 한다. 두 기능은 아직 구현 완료 범위에 포함하지 않는다.
 
-    with path.open(encoding="utf-8") as stream:
-        for line in stream:
-            try:
-                record = json.loads(line)
-            except json.JSONDecodeError:
-                invalid += 1
-                continue
+## 마무리
 
-            if not isinstance(record, dict) or not isinstance(record.get("event"), str):
-                invalid += 1
-                continue
-            counts[record["event"]] += 1
-
-    return counts, invalid
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Count event names in a JSONL file")
-    parser.add_argument("file", type=Path)
-    args = parser.parse_args()
-
-    counts, invalid = summarize(args.file)
-    for event, count in sorted(counts.items()):
-        print(f"{event}: {count}")
-    print(f"invalid_lines: {invalid}")
-```
-
-```text
-$ python3 summarize.py sample.jsonl
-login_failed: 2
-login_success: 1
-invalid_lines: 0
-```
-
-## 이 예제에서 확인할 것
-
-1. **입력 경계:** JSON 파싱 성공과 필요한 필드의 존재는 다른 문제다. 둘 다 검사한다.
-2. **재현성:** 예시 입력과 예상 출력을 함께 두면 도구를 수정한 뒤 결과를 비교할 수 있다.
-3. **실패 범위:** 깨진 한 줄 때문에 전체 처리가 멈추지 않는다. 다만 파일이 없거나 읽을 권한이 없는 경우는 사용자에게 오류를 보여 준다.
-4. **공개 범위:** 보안 글에서는 실제 로그보다 합성 데이터를 사용한다.
-
-다음 단계로는 빈 파일, 빈 줄, 배열 형태의 JSON, 매우 큰 파일을 시험할 수 있다. 기능을 추가할 때마다 입력과 예상 결과를 같이 기록하는 습관이 도구의 신뢰도를 높인다.
+이번 개발에서는 ELF 구조 파싱과 보호기법 출력을 완성했다. 기존 분석 도구의 결과를 읽는 데서 한 걸음 더 나아가, 그 결과를 얻기 위해 바이너리의 어떤 정보를 해석해야 하는지 직접 확인할 수 있었다.
