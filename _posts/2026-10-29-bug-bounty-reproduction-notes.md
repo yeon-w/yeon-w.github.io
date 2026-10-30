@@ -2,7 +2,7 @@
 layout: post
 title: "버그바운티 제보 전, 재현과 영향 범위를 정리하는 법"
 date: 2026-10-29 00:00:00 +0900
-description: "허가된 범위 안에서 발견 사실을 검증하고, 과장 없이 제보 자료를 작성하기 위한 체크리스트입니다."
+description: "발견 사실을 검증하고, 제보 자료를 작성"
 categories: ['Bug Bounty']
 tags: [bug-bounty, disclosure, reporting]
 toc: true
