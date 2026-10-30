@@ -14,13 +14,12 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: git.log # 공개용 필명/브랜드. 본인 이름으로 바꿔도 됩니다.
+title: yeon-w # 공개용 필명/브랜드. 본인 이름으로 바꿔도 됩니다.
 
-tagline: 관찰하고, 검증하고, 기록합니다.
+tagline: git.log
 
 description: >- # used by seo meta and the atom feed
-  CTF와 포너블, 디지털 포렌식, AI 레드티밍과 프롬프트 인젝션,
-  임베디드·차량 보안을 공부하며 실험 과정과 근거를 남기는 보안 기술 블로그.
+  보안 개념들과 프로젝트 실습 정리 블로그
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
