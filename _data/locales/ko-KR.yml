@@ -14,7 +14,6 @@ tabs:
   categories: 카테고리
   topics: 연구 분야
   tags: 태그
-  archives: 아카이브
   about: 소개
   # The custom tabs use Korean front matter titles for Korean SEO metadata.
   카테고리: 카테고리
