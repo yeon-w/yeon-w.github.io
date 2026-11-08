@@ -1,23 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">TRACE.LOG</title>
-  <desc id="desc">A shield and signal trace on a dark grid</desc>
-  <defs>
-    <linearGradient id="bg" x2="1" y2="1">
-      <stop stop-color="#15314b"/>
-      <stop offset="1" stop-color="#071323"/>
-    </linearGradient>
-    <linearGradient id="edge" x2="1" y2="1">
-      <stop stop-color="#78ead7"/>
-      <stop offset="1" stop-color="#3c9cae"/>
-    </linearGradient>
-    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
-      <path d="M24 0H0V24" fill="none" stroke="#6ddfce" stroke-opacity=".12"/>
-    </pattern>
-  </defs>
-  <rect width="256" height="256" rx="38" fill="url(#bg)"/>
-  <rect width="256" height="256" rx="38" fill="url(#grid)"/>
-  <path d="M128 38 204 66v55c0 52-29 86-76 105-47-19-76-53-76-105V66z" fill="#0c2235" stroke="url(#edge)" stroke-width="7"/>
-  <path d="M74 139h36l14-34 18 47 11-21h29" fill="none" stroke="#7df1dd" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="74" cy="139" r="5" fill="#f9bd78"/>
-  <circle cx="182" cy="131" r="5" fill="#f9bd78"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">파란 눈의 갈색 고양이</title>
+  <rect width="64" height="64" rx="12" fill="#342820"/>
+  <path d="M10 25 13 9l13 10a26 26 0 0 1 12 0L51 9l3 16c2 4 3 8 3 12 0 13-11 22-25 22S7 50 7 37c0-4 1-8 3-12Z" fill="#a68169" stroke="#241912" stroke-width="2"/>
+  <path d="M13 27c4-8 11-10 17-7l2 8-5 13-16-1c-1-5 0-9 2-13Zm38 0c-4-8-11-10-17-7l-2 8 5 13 16-1c1-5 0-9-2-13Z" fill="#5a3b2c"/>
+  <path d="m29 19 3 8 3-8 4 19-7 15-7-15Z" fill="#f8f0e4"/>
+  <path d="M13 41c4-3 11-4 19-1 8-3 15-2 19 1-1 10-9 18-19 18s-18-8-19-18Z" fill="#f8f0e4"/>
+  <ellipse cx="23" cy="35" rx="5" ry="6" fill="#98c9d6"/>
+  <ellipse cx="41" cy="35" rx="5" ry="6" fill="#98c9d6"/>
+  <ellipse cx="23" cy="35" rx="2.2" ry="3.5" fill="#241912"/>
+  <ellipse cx="41" cy="35" rx="2.2" ry="3.5" fill="#241912"/>
+  <path d="m28 45 4 3 4-3Z" fill="#d89088"/>
 </svg>

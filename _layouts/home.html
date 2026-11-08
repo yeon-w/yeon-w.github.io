@@ -48,13 +48,18 @@ layout: default
 
 {% if paginator.page == 1 %}
   <section class="trace-home-hero" aria-label="블로그 소개">
-    <p class="trace-eyebrow">TRACE.LOG / SECURITY FIELD NOTES</p>
-    <h2>yeon-w<br>보안 공부 블로그</h2>
-    <p>개념 공부와 실습 정리 기록</p>
-    <div class="trace-home-actions">
-      <a href="{{ '/topics/' | relative_url }}">여섯 연구 분야 보기 <span aria-hidden="true">↗</span></a>
-      <a href="{{ '/about/' | relative_url }}">이 블로그 소개 <span aria-hidden="true">↗</span></a>
+    <div class="trace-home-copy">
+      <p class="trace-eyebrow">TRACE.LOG / SECURITY FIELD NOTES</p>
+      <h2><span class="trace-home-handle">yeon-w</span><br>보안 공부 블로그</h2>
+      <p>개념 공부와 실습 정리 기록</p>
+      <div class="trace-home-actions">
+        <a href="{{ '/topics/' | relative_url }}">여섯 연구 분야 보기 <span aria-hidden="true">↗</span></a>
+        <a href="{{ '/about/' | relative_url }}">이 블로그 소개 <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
+    <figure class="trace-home-mascot">
+      <img src="{{ '/assets/img/cat-mascot.webp' | relative_url }}" alt="갈색 얼굴 무늬와 파란 눈을 가진 흰 털 고양이 캐릭터" width="962" height="1000" fetchpriority="high" decoding="async">
+    </figure>
   </section>
 {% endif %}
 

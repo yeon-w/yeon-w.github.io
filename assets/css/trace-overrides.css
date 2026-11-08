@@ -1,57 +1,57 @@
-/* TRACE.LOG — a quiet reading system for technical field notes. */
+/* TRACE.LOG — field notes in the cat's own colors. */
 :root[data-bs-theme='light'] {
-  --trace-paper: #f8faf9;
-  --trace-ink: #182d31;
-  --trace-muted: #5d7173;
-  --trace-rule: #cbd8d6;
-  --trace-hover: #eef4f2;
-  --trace-accent: #116a65;
-  --trace-note: #9b613d;
+  --trace-paper: #faf7f2;
+  --trace-ink: #302923;
+  --trace-muted: #6d6157;
+  --trace-rule: #d9cdc0;
+  --trace-hover: #f1e9de;
+  --trace-accent: #336b7d;
+  --trace-note: #8a5b41;
   --main-bg: var(--trace-paper);
-  --sidebar-bg: #193439;
-  --sidebar-hover-bg: #25454a;
-  --sidebar-muted-color: #b7cece;
-  --sidebar-active-color: #f7fcfb;
-  --sidebar-btn-bg: #25454a;
-  --sidebar-btn-color: #d5e6e4;
-  --sidebar-border-color: #496367;
-  --site-title-color: #f7fcfb;
-  --site-subtitle-color: #b7cece;
+  --sidebar-bg: #342820;
+  --sidebar-hover-bg: #46372e;
+  --sidebar-muted-color: #d5c6b7;
+  --sidebar-active-color: #fff9f1;
+  --sidebar-btn-bg: #46372e;
+  --sidebar-btn-color: #e8d9ca;
+  --sidebar-border-color: #6a5548;
+  --site-title-color: #fff9f1;
+  --site-subtitle-color: #d5c6b7;
   --link-color: var(--trace-accent);
-  --link-underline-color: #8fbcb6;
+  --link-underline-color: #9abdc5;
   --card-bg: var(--trace-paper);
   --card-hover-bg: var(--trace-hover);
   --main-border-color: var(--trace-rule);
   --heading-color: var(--trace-ink);
-  --text-color: #2c4549;
+  --text-color: #463c34;
   --text-muted-color: var(--trace-muted);
 }
 
 :root[data-bs-theme='dark'] {
-  --trace-paper: #101e21;
-  --trace-ink: #eef5f3;
-  --trace-muted: #a9c0be;
-  --trace-rule: #40575a;
-  --trace-hover: #1a2f32;
-  --trace-accent: #8fd2c7;
-  --trace-note: #d8a279;
+  --trace-paper: #211c19;
+  --trace-ink: #f3e9dc;
+  --trace-muted: #c6b8a9;
+  --trace-rule: #625146;
+  --trace-hover: #302721;
+  --trace-accent: #9ccbd9;
+  --trace-note: #dba882;
   --main-bg: var(--trace-paper);
-  --sidebar-bg: #0c191d;
-  --sidebar-hover-bg: #20383d;
-  --sidebar-muted-color: #adc3c1;
-  --sidebar-active-color: #f7fcfb;
-  --sidebar-btn-bg: #20383d;
-  --sidebar-btn-color: #d5e6e4;
-  --sidebar-border-color: #496367;
-  --site-title-color: #f7fcfb;
-  --site-subtitle-color: #adc3c1;
+  --sidebar-bg: #181411;
+  --sidebar-hover-bg: #342920;
+  --sidebar-muted-color: #ccbba9;
+  --sidebar-active-color: #fff9f1;
+  --sidebar-btn-bg: #342920;
+  --sidebar-btn-color: #e8d9ca;
+  --sidebar-border-color: #5e4b3f;
+  --site-title-color: #fff9f1;
+  --site-subtitle-color: #ccbba9;
   --link-color: var(--trace-accent);
-  --link-underline-color: #5d9991;
+  --link-underline-color: #678f9d;
   --card-bg: var(--trace-paper);
   --card-hover-bg: var(--trace-hover);
   --main-border-color: var(--trace-rule);
   --heading-color: var(--trace-ink);
-  --text-color: #d6e4e1;
+  --text-color: #e4d7ca;
   --text-muted-color: var(--trace-muted);
 }
 
@@ -69,6 +69,16 @@ body {
   border-bottom: 1px solid var(--trace-rule);
 }
 
+#topbar-title::before {
+  display: inline-block;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-right: 0.45rem;
+  background: url('/assets/img/favicons/favicon-96x96.png') center / contain no-repeat;
+  content: '';
+  vertical-align: -0.27rem;
+}
+
 #sidebar {
   background: var(--sidebar-bg);
   background-image: none;
@@ -81,8 +91,19 @@ body {
 }
 
 #sidebar #avatar {
-  border-radius: 0.4rem !important;
-  box-shadow: 0 0 0 1px var(--sidebar-border-color);
+  overflow: hidden;
+  border: 1px solid #bfa994;
+  border-radius: 0.3rem !important;
+  background: #eee1d0;
+  box-shadow: none;
+}
+
+#sidebar #avatar img {
+  width: 100%;
+  height: 100%;
+  padding: 0.15rem;
+  border-radius: 0 !important;
+  object-fit: contain;
 }
 
 #sidebar #avatar img:hover {
@@ -144,13 +165,22 @@ body {
 }
 
 .trace-home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.76fr);
+  align-items: stretch;
+  gap: clamp(1.4rem, 3.4vw, 3.2rem);
   margin: 0.8rem 0 0;
-  padding: clamp(2.1rem, 4vw, 3.4rem) 0 clamp(2rem, 3vw, 3rem);
+  padding: clamp(2.1rem, 4vw, 3.4rem) 0 0;
   border: 0;
   border-top: 2px solid var(--trace-ink);
   border-bottom: 1px solid var(--trace-rule);
   border-radius: 0;
   background: transparent;
+}
+
+.trace-home-copy {
+  min-width: 0;
+  padding-bottom: clamp(2rem, 3vw, 3rem);
 }
 
 .trace-home-hero::after,
@@ -159,23 +189,58 @@ body {
 }
 
 .trace-home-hero h2 {
-  max-width: 17ch;
-  margin: 0.85rem 0 0.9rem;
+  max-width: 15ch;
+  margin: 0.8rem 0 1.15rem;
   color: var(--trace-ink);
-  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-family: 'AppleMyungjo', 'Noto Serif KR', 'Batang', serif;
+  font-size: clamp(2.15rem, 3.4vw, 2.95rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.26;
+  letter-spacing: -0.045em;
+  line-height: 1.32;
   text-wrap: balance;
 }
 
-.trace-home-hero > p:not(.trace-eyebrow) {
+.trace-home-handle {
+  color: var(--trace-accent);
+  font-family: Menlo, Monaco, Consolas, monospace;
+  font-size: 0.55em;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.trace-home-copy > p:not(.trace-eyebrow) {
   max-width: 45ch;
   margin: 0;
   color: var(--trace-muted);
   font-size: 1.05rem;
   line-height: 1.75;
+}
+
+.trace-home-mascot {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  min-width: 0;
+  min-height: 19rem;
+  margin: 0;
+  background: #ece0cf;
+  border-left: 1px solid #d5c2ac;
+  border-right: 1px solid #d5c2ac;
+  overflow: hidden;
+}
+
+.trace-home-mascot img {
+  display: block;
+  width: min(100%, 20rem);
+  height: auto;
+  max-height: 22rem;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+:root[data-bs-theme='dark'] .trace-home-mascot {
+  background: #49382c;
+  border-color: #705946;
 }
 
 .trace-home-actions {
@@ -399,11 +464,29 @@ main > article .content h3 {
 
 @media (max-width: 767px) {
   .trace-home-hero {
+    grid-template-columns: 1fr;
+    gap: 0;
     padding-top: 2rem;
   }
 
   .trace-home-hero h2 {
-    font-size: 2.1rem;
+    font-size: 2.25rem;
+  }
+
+  .trace-home-copy {
+    padding-bottom: 1.8rem;
+  }
+
+  .trace-home-mascot {
+    justify-self: end;
+    width: min(68%, 15rem);
+    min-height: 0;
+    height: 13.5rem;
+  }
+
+  .trace-home-mascot img {
+    width: 12rem;
+    max-height: none;
   }
 
   .topic-grid {
