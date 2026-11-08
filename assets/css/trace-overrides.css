@@ -238,6 +238,19 @@ body {
   object-position: bottom center;
 }
 
+.trace-home-mascot .preview-img {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+}
+
+.trace-home-mascot .preview-img.shimmer::before {
+  display: none !important;
+}
+
 :root[data-bs-theme='dark'] .trace-home-mascot {
   background: #49382c;
   border-color: #705946;
