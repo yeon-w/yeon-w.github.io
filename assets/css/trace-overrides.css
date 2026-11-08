@@ -231,7 +231,7 @@ body {
 .trace-home-mascot img {
   display: block;
   width: min(100%, 20rem);
-  height: auto;
+  height: 100%;
   max-height: 22rem;
   object-fit: contain;
   object-position: bottom center;
