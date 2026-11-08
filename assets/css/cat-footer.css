@@ -1,0 +1,27 @@
+/* The home mascot rests on the footer rule of the five navigation pages. */
+#tail-wrapper footer {
+  position: relative;
+  margin-top: 8rem;
+}
+
+#tail-wrapper footer::before {
+  position: absolute;
+  right: clamp(0.75rem, 4vw, 2.4rem);
+  bottom: 100%;
+  width: clamp(5.2rem, 8vw, 6.6rem);
+  aspect-ratio: 962 / 1000;
+  background: url('/assets/img/cat-mascot.webp') center bottom / contain no-repeat;
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  #tail-wrapper footer {
+    margin-top: 7rem;
+  }
+
+  #tail-wrapper footer::before {
+    right: 0.65rem;
+    width: 5.5rem;
+  }
+}

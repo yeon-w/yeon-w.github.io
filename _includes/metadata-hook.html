@@ -1,1 +1,5 @@
 <link rel="stylesheet" href="{{ '/assets/css/trace-overrides.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+{% assign footer_mascot_pages = '/categories/,/topics/,/tags/,/archives/,/about/' | split: ',' %}
+{% if footer_mascot_pages contains page.url %}
+<link rel="stylesheet" href="{{ '/assets/css/cat-footer.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+{% endif %}
