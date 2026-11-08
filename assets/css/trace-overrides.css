@@ -223,9 +223,8 @@ body {
   min-width: 0;
   min-height: 19rem;
   margin: 0;
-  background: #ece0cf;
-  border-left: 1px solid #d5c2ac;
-  border-right: 1px solid #d5c2ac;
+  background: transparent;
+  border: 0;
   overflow: hidden;
 }
 
@@ -249,11 +248,6 @@ body {
 
 .trace-home-mascot .preview-img.shimmer::before {
   display: none !important;
-}
-
-:root[data-bs-theme='dark'] .trace-home-mascot {
-  background: #49382c;
-  border-color: #705946;
 }
 
 .trace-home-actions {
