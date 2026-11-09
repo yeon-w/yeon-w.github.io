@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "보안 공부 기록"
+title: "회고록"
 date: 2026-11-09 00:00:00 +0900
-description: "회고록"
+description: "지금까지 한 활동 정리"
 categories: ['블로그/기술문서']
 tags: [writing, documentation, reproducibility]
 toc: true
