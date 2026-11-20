@@ -8,18 +8,24 @@ tags: [research, paper-reading, conference]
 toc: true
 ---
 
-[ACM CCS 2017] Directed Greybox Fuzzing
-논문 정보
-- 논문명: Directed Greybox Fuzzing
-- 학회: ACM SIGSAC Conference on Computer and Communications Security (CCS 2017)
-- 저자: Marcel Böhme, Van-Thuan Pham, Manh-Dung Nguyen, Abhik Roychoudhury
-- 연구 분야: Software Security, Fuzzing, Vulnerability Detection
-- 핵심 기술: Directed Greybox Fuzzing, AFLGo, Simulated Annealing, Distance-based Seed Scheduling
-- 논문: https://mboehme.github.io/paper/CCS17.pdf
-- GitHub: https://github.com/aflgo/aflgo
+# [ACM CCS 2017] Directed Greybox Fuzzing
 
-1. 서론: 연구 배경과 문제의식
-1.1 기존 퍼징 기법의 한계
+## 논문 정보
+
+- **논문명:** Directed Greybox Fuzzing
+- **학회:** ACM SIGSAC Conference on Computer and Communications Security (CCS 2017)
+- **저자:** Marcel Böhme, Van-Thuan Pham, Manh-Dung Nguyen, Abhik Roychoudhury
+- **연구 분야:** Software Security, Fuzzing, Vulnerability Detection
+- **핵심 기술:** Directed Greybox Fuzzing, AFLGo, Simulated Annealing, Distance-based Seed Scheduling
+- **논문:** https://mboehme.github.io/paper/CCS17.pdf
+- **GitHub:** https://github.com/aflgo/aflgo
+
+---
+
+## 1. 서론: 연구 배경과 문제의식
+
+### 1.1 기존 퍼징 기법의 한계
+
 퍼징(Fuzzing)은 프로그램에 다양한 입력을 반복적으로 전달하여 예기치 않은 동작이나 취약점을 탐지하는 소프트웨어 테스트 기법이다.
 
 대표적인 퍼저인 AFL(American Fuzzy Lop)은 프로그램 실행 과정에서 얻은 코드 커버리지 정보를 활용한다. 기존 입력을 변형하여 새로운 실행 경로가 발견되면 해당 입력을 저장하고, 이를 다시 변형하는 방식으로 탐색 범위를 확장한다.
@@ -28,20 +34,24 @@ toc: true
 
 그러나 기존 Greybox Fuzzing에는 한 가지 문제가 존재한다.
 
-모든 실행 경로를 폭넓게 탐색하려고 하기 때문에 특정 코드 지점을 집중적으로 테스트하기 어렵다는 것이다.
+**모든 실행 경로를 폭넓게 탐색하려고 하기 때문에 특정 코드 지점을 집중적으로 테스트하기 어렵다는 것이다.**
 
 예를 들어 수십만 줄의 코드로 구성된 프로그램에서 보안 취약점이 의심되는 부분이 단 한 곳이라고 가정해 보자.
 
 기존 AFL은 새로운 실행 경로를 발견하는 데 집중하기 때문에 취약점이 의심되는 부분과 관련 없는 코드도 계속 탐색할 수 있다.
 
 결과적으로 원하는 코드 지점에 도달하기까지 불필요한 시간과 계산 자원이 사용된다.
-1.2 Directed Fuzzing이 필요한 이유
+
+### 1.2 Directed Fuzzing이 필요한 이유
+
 실제 보안 분석에서는 프로그램 전체보다 특정 코드 지점을 집중적으로 검사해야 하는 경우가 많다.
 
 대표적으로 다음과 같은 상황이 있다.
-- Patch Testing: 코드가 수정된 부분을 집중적으로 검사하여 새로운 취약점이 발생했는지 확인한다.
-- Crash Reproduction: 오류 발생 시 기록된 Stack Trace를 기반으로 동일한 오류를 재현한다.
-- Vulnerability Verification: 정적 분석으로 발견한 잠재적인 취약점이 실제로 발생하는지 확인한다.
+
+- **Patch Testing:** 코드가 수정된 부분을 집중적으로 검사하여 새로운 취약점이 발생했는지 확인한다.
+- **Crash Reproduction:** 오류 발생 시 기록된 Stack Trace를 기반으로 동일한 오류를 재현한다.
+- **Vulnerability Verification:** 정적 분석으로 발견한 잠재적인 취약점이 실제로 발생하는지 확인한다.
+
 이러한 상황에서는 전체 코드 커버리지를 높이는 것보다 목표 코드까지 빠르게 도달하는 것이 중요하다.
 
 이를 해결하기 위해 Directed Fuzzing이라는 개념이 사용되었다.
@@ -52,49 +62,63 @@ Symbolic Execution은 프로그램의 분기 조건을 수식으로 표현하고
 
 그러나 복잡한 프로그램에서는 경로가 증가할수록 분석 비용이 커지며, 제약조건을 계산하는 과정에도 상당한 시간이 필요하다.
 
-저자들은 이러한 한계를 해결하기 위해 Greybox Fuzzing의 높은 실행 속도와 Directed Fuzzing의 목표 지향적인 탐색을 결합하는 방법을 제안하였다.
+저자들은 이러한 한계를 해결하기 위해 **Greybox Fuzzing의 높은 실행 속도와 Directed Fuzzing의 목표 지향적인 탐색을 결합하는 방법**을 제안하였다.
 
-2. 문제 정의와 연구 목표
-본 논문은 특정 목표 코드 지점에 빠르게 도달하면서도 기존 Greybox Fuzzing의 실행 효율성을 유지하는 것을 목표로 한다.
+---
+
+## 2. 문제 정의와 연구 목표
+
+본 논문은 **특정 목표 코드 지점에 빠르게 도달하면서도 기존 Greybox Fuzzing의 실행 효율성을 유지하는 것**을 목표로 한다.
 
 이를 위해 다음 세 가지 문제를 해결해야 한다.
-2.1 목표 코드까지의 거리를 어떻게 계산할 것인가?
+
+### 2.1 목표 코드까지의 거리를 어떻게 계산할 것인가?
+
 기존 Greybox Fuzzing은 실행한 경로의 커버리지를 확인할 수 있지만, 해당 경로가 목표 코드에서 얼마나 떨어져 있는지는 알지 못한다.
 
 따라서 특정 입력이 목표에 가까워졌는지 판단하기 위한 거리 측정 방법이 필요하다.
-2.2 어떤 Seed를 우선적으로 변형할 것인가?
+
+### 2.2 어떤 Seed를 우선적으로 변형할 것인가?
+
 퍼저는 수많은 Seed를 관리하며 새로운 입력을 생성한다.
 
 목표 코드에 가까운 Seed를 우선적으로 변형하면 효율적일 수 있지만, 특정 Seed에만 집중할 경우 목표로 이어지는 다른 경로를 놓칠 수 있다.
 
 따라서 새로운 경로를 탐색하는 과정과 목표에 가까운 경로를 집중적으로 탐색하는 과정 사이의 균형이 필요하다.
-2.3 기존 Greybox Fuzzing의 실행 속도를 유지할 수 있는가?
+
+### 2.3 기존 Greybox Fuzzing의 실행 속도를 유지할 수 있는가?
+
 목표까지의 거리를 계산하기 위해 매번 복잡한 프로그램 분석을 수행한다면 Greybox Fuzzing의 장점인 높은 실행 속도를 잃게 된다.
 
 따라서 무거운 분석 작업은 사전에 처리하고, 실제 퍼징 과정에서는 최소한의 정보만 활용해야 한다.
 
-3. 핵심 아이디어: AFLGo
-저자들은 이러한 문제를 해결하기 위해 Directed Greybox Fuzzer인 AFLGo를 개발하였다.
+---
+
+## 3. 핵심 아이디어: AFLGo
+
+저자들은 이러한 문제를 해결하기 위해 Directed Greybox Fuzzer인 **AFLGo**를 개발하였다.
 
 AFLGo의 핵심 아이디어는 다음과 같다.
 
-프로그램의 실행 경로와 목표 코드 사이의 거리를 계산하고, 목표에 가까운 Seed에 더 많은 퍼징 자원을 할당한다.
+**프로그램의 실행 경로와 목표 코드 사이의 거리를 계산하고, 목표에 가까운 Seed에 더 많은 퍼징 자원을 할당한다.**
 
 이를 위해 기존 AFL에 두 가지 핵심 기술을 추가하였다.
-3.1 Distance-based Guidance
+
+### 3.1 Distance-based Guidance
+
 첫 번째는 목표 코드까지의 거리를 계산하여 입력의 우선순위를 결정하는 것이다.
 
 AFLGo는 프로그램의 구조를 분석하기 위해 다음 두 그래프를 활용한다.
 
-① Call Graph (CG)
+**① Call Graph (CG)**
 
 함수 사이의 호출 관계를 나타내는 그래프이다.
 
-예를 들어 main() 함수가 process()를 호출하고, process()가 target()을 호출한다면 다음과 같은 호출 관계를 가진다.
+예를 들어 `main()` 함수가 `process()`를 호출하고, `process()`가 `target()`을 호출한다면 다음과 같은 호출 관계를 가진다.
 
-main → process → target
+`main → process → target`
 
-② Control Flow Graph (CFG)
+**② Control Flow Graph (CFG)**
 
 하나의 함수 내부에서 조건문과 반복문 등에 따라 실행 흐름이 어떻게 분기되는지를 나타내는 그래프이다.
 
@@ -108,12 +132,14 @@ AFLGo는 Call Graph와 CFG를 함께 활용하여 함수 사이의 거리와 함
 
 Seed의 거리는 실행 경로에 포함된 Basic Block의 거리값을 평균하여 계산한다.
 
-Seed Distance = 실행한 Basic Block들의 목표 거리 합 / 실행한 Basic Block 수
+`Seed Distance = 실행한 Basic Block들의 목표 거리 합 / 실행한 Basic Block 수`
 
 거리값이 작을수록 목표 코드에 가깝다고 판단한다.
 
-이러한 계산을 통해 AFLGo는 단순히 새로운 실행 경로를 발견하는 것을 넘어, 목표 코드에 접근하고 있는 실행 경로를 구분할 수 있게 된다.
-3.2 Simulated Annealing-based Power Scheduling
+이러한 계산을 통해 AFLGo는 단순히 새로운 실행 경로를 발견하는 것을 넘어, **목표 코드에 접근하고 있는 실행 경로를 구분할 수 있게 된다.**
+
+### 3.2 Simulated Annealing-based Power Scheduling
+
 두 번째 핵심 기술은 Simulated Annealing을 활용한 Seed Scheduling이다.
 
 Simulated Annealing은 최적화 문제를 해결할 때 초기에는 다양한 후보를 탐색하고, 시간이 지날수록 더 유망한 후보에 집중하는 기법이다.
@@ -122,13 +148,13 @@ AFLGo는 이 개념을 퍼징에 적용하였다.
 
 퍼징 초반에는 목표 코드와의 거리가 다소 멀더라도 다양한 Seed를 변형한다.
 
-이를 Exploration Phase라고 한다.
+이를 **Exploration Phase**라고 한다.
 
 이 단계에서는 아직 발견하지 못한 실행 경로를 탐색하는 것이 중요하다.
 
 반면 퍼징이 진행될수록 목표에 가까운 Seed에 더 많은 자원을 할당한다.
 
-이를 Exploitation Phase라고 한다.
+이를 **Exploitation Phase**라고 한다.
 
 이 단계에서는 이미 발견한 유망한 경로를 집중적으로 탐색하여 실제 목표 지점에 도달하도록 한다.
 
@@ -140,28 +166,40 @@ AFLGo는 이러한 전환을 Simulated Annealing의 온도(Temperature) 개념�
 
 결과적으로 AFLGo는 탐색 초기에는 다양성을 확보하고, 후반에는 목표에 가까운 경로를 집중적으로 검사할 수 있다.
 
-4. 시스템 구성 및 동작 과정
+---
+
+## 4. 시스템 구성 및 동작 과정
+
 AFLGo는 크게 네 가지 구성 요소로 이루어진다.
-4.1 Graph Extractor
+
+### 4.1 Graph Extractor
+
 프로그램의 소스코드에서 Call Graph와 Control Flow Graph를 추출한다.
 
 이 단계에서는 함수 사이의 호출 관계와 함수 내부의 제어 흐름을 분석하여 목표 코드까지의 거리를 계산하기 위한 기초 정보를 생성한다.
-4.2 Distance Calculator
+
+### 4.2 Distance Calculator
+
 추출한 그래프와 사용자가 지정한 목표 코드 위치를 바탕으로 각 Basic Block의 목표 거리값을 계산한다.
 
 이때 함수 사이의 호출 거리와 함수 내부의 분기 구조를 함께 고려한다.
 
 계산된 결과는 이후 실행 시 사용할 수 있도록 저장된다.
-4.3 Instrumentor
+
+### 4.3 Instrumentor
+
 각 Basic Block에 거리 정보를 기록하는 계측 코드를 삽입한다.
 
 일반적인 AFL이 코드 커버리지 정보를 수집한다면, AFLGo는 여기에 목표 코드까지의 거리 정보를 추가로 수집하도록 프로그램을 수정한다.
 
 이 덕분에 퍼징 과정에서 복잡한 그래프 분석을 반복하지 않고도 실행한 Seed의 거리를 계산할 수 있다.
-4.4 AFLGo Fuzzer
+
+### 4.4 AFLGo Fuzzer
+
 실제 프로그램을 반복적으로 실행하면서 입력을 변형하는 구성 요소이다.
 
 전체 동작 과정은 다음과 같다.
+
 1. 사용자가 목표 코드 위치를 지정한다.
 2. Graph Extractor가 프로그램 구조를 분석한다.
 3. Distance Calculator가 목표 코드까지의 거리를 계산한다.
@@ -169,13 +207,19 @@ AFLGo는 크게 네 가지 구성 요소로 이루어진다.
 5. AFLGo Fuzzer가 초기 Seed를 실행하고 거리 피드백을 수집한다.
 6. Simulated Annealing 기반 스케줄링에 따라 Seed를 변형한다.
 7. 목표 코드에 도달하거나 취약점이 발생할 때까지 반복한다.
-이 구조에서 중요한 점은 대부분의 프로그램 분석이 컴파일 및 계측 단계에서 수행된다는 것이다.
+
+이 구조에서 중요한 점은 **대부분의 프로그램 분석이 컴파일 및 계측 단계에서 수행된다는 것**이다.
 
 따라서 실제 퍼징 단계에서는 기존 Greybox Fuzzing과 유사한 높은 실행 효율성을 유지할 수 있다.
 
-5. 실험 및 평가
+---
+
+## 5. 실험 및 평가
+
 저자들은 AFLGo의 효과를 검증하기 위해 Patch Testing, Crash Reproduction, 실제 오픈소스 프로젝트의 취약점 탐지 실험을 수행하였다.
-5.1 Heartbleed 취약점 재현
+
+### 5.1 Heartbleed 취약점 재현
+
 첫 번째 사례는 OpenSSL의 Heartbleed 취약점(CVE-2014-0160)이다.
 
 Heartbleed는 입력에서 지정한 데이터 길이를 적절하게 검증하지 않아 메모리의 일부가 노출되는 취약점이다.
@@ -187,21 +231,31 @@ Heartbleed는 입력에서 지정한 데이터 길이를 적절하게 검증하�
 반면 비교 대상인 Symbolic Execution 기반 도구 KATCH는 24시간 이내에 해당 취약점을 재현하지 못하였다.
 
 이는 AFLGo가 무거운 제약조건 분석을 수행하지 않으면서도 목표 코드까지 효율적으로 접근할 수 있음을 보여준다.
-5.2 Patch Testing 성능
+
+### 5.2 Patch Testing 성능
+
 저자들은 GNU Binutils와 GNU Diffutils를 대상으로 AFLGo와 KATCH를 비교하였다.
 
 실험에서는 기존 테스트로 실행되지 않았던 변경 Basic Block을 얼마나 탐색할 수 있는지 평가하였다.
-평가 항목	KATCH	AFLGo
-새롭게 실행한 변경 Basic Block	198개	223개AFLGo는 동일한 실험 시간 내에 KATCH보다 약 13% 더 많은 목표 Basic Block을 실행하였다.
+
+| 평가 항목 | KATCH | AFLGo |
+|---|---:|---:|
+| 새롭게 실행한 변경 Basic Block | 198개 | 223개 |
+
+AFLGo는 동일한 실험 시간 내에 KATCH보다 약 13% 더 많은 목표 Basic Block을 실행하였다.
 
 또한 기존 도구가 발견하지 못한 13개의 버그를 발견하였으며, 그중 7개에는 CVE가 부여되었다.
-5.3 기존 AFL과의 비교
+
+### 5.3 기존 AFL과의 비교
+
 저자들은 AFLGo가 실제로 목표 지향적인 탐색을 수행하는지 확인하기 위해 일반 AFL과도 비교하였다.
 
 그 결과 목표 지점에 도달하는 속도는 LibPNG에서 약 3~11배, Binutils에서 약 1.5~2배 향상되었다.
 
 이는 단순히 AFL을 수정했다는 사실뿐 아니라, 거리 기반 Seed Scheduling이 실제 탐색 효율성 향상에 기여한다는 점을 보여준다.
-5.4 실제 취약점 탐지
+
+### 5.4 실제 취약점 탐지
+
 AFLGo는 보안이 중요한 여러 오픈소스 프로젝트에서 총 39개의 버그를 발견하였다.
 
 이 중 17개의 취약점에 CVE가 부여되었다.
@@ -210,8 +264,12 @@ AFLGo는 보안이 중요한 여러 오픈소스 프로젝트에서 총 39개의
 
 이를 통해 AFLGo가 제한된 실험 환경에서뿐 아니라 실제 소프트웨어 보안 테스트에도 활용될 수 있음을 확인하였다.
 
-6. 한계점 및 아쉬운 점
-6.1 목표 코드의 사전 지정이 필요함
+---
+
+## 6. 한계점 및 아쉬운 점
+
+### 6.1 목표 코드의 사전 지정이 필요함
+
 AFLGo는 특정 목표 코드에 효율적으로 도달하는 데 초점을 맞춘다.
 
 따라서 사용자가 목표 지점을 미리 지정해야 한다.
@@ -219,15 +277,19 @@ AFLGo는 특정 목표 코드에 효율적으로 도달하는 데 초점을 맞�
 그러나 실제 취약점 탐지에서는 어떤 코드가 위험한지 사전에 알지 못하는 경우도 많다.
 
 따라서 AFLGo 자체는 취약점이 존재할 가능성이 높은 지점을 자동으로 결정하는 기능보다, 이미 지정된 목표에 도달하는 기능에 강점이 있다고 볼 수 있다.
-6.2 코드상 거리가 실제 도달 가능성을 보장하지 않음
+
+### 6.2 코드상 거리가 실제 도달 가능성을 보장하지 않음
+
 AFLGo는 Call Graph와 CFG를 통해 목표 코드까지의 거리를 계산한다.
 
 그러나 코드상으로 가까운 위치에 있더라도 복잡한 분기 조건을 만족하지 못하면 실제 목표 코드에 도달할 수 없다.
 
 예를 들어 목표 코드 직전에 특정 문자열이 필요한 조건문이 있다면, 거리값이 매우 작더라도 해당 문자열을 생성하지 못하는 이상 목표 코드에 도달하기 어렵다.
 
-즉, 구조적으로 가까운 코드 경로가 실제로 실행 가능한 경로라는 보장은 없다.
-6.3 입력의 의미를 고려하지 못함
+즉, **구조적으로 가까운 코드 경로가 실제로 실행 가능한 경로라는 보장은 없다.**
+
+### 6.3 입력의 의미를 고려하지 못함
+
 AFLGo는 주로 기존 Seed의 바이트를 변형하는 방식으로 새로운 입력을 생성한다.
 
 따라서 자연어 입력처럼 의미가 중요한 데이터에는 그대로 적용하기 어렵다.
@@ -235,15 +297,21 @@ AFLGo는 주로 기존 Seed의 바이트를 변형하는 방식으로 새로운 
 예를 들어 LLM 에이전트에서는 프롬프트가 실행할 도구를 결정하는데, 단순한 바이트 변형은 자연어의 의미를 훼손하여 오히려 목표 기능을 실행하지 못하게 만들 수 있다.
 
 이러한 점은 이후 AgentFuzz와 같은 연구가 등장하는 배경이 된다.
-6.4 초기 Seed와 탐색 전략에 대한 의존성
+
+### 6.4 초기 Seed와 탐색 전략에 대한 의존성
+
 AFLGo는 초기 Seed를 기반으로 입력을 변형하기 때문에 Seed의 품질에 영향을 받는다.
 
 또한 Exploration에서 Exploitation으로 전환하는 시점이 적절하지 않으면 중요한 실행 경로를 발견하기 전에 탐색 범위가 좁아질 수 있다.
 
 따라서 목표 코드의 특성에 따라 Seed Scheduling을 동적으로 조정하는 방법도 고려할 필요가 있다.
 
-7. 내가 생각하는 후속 연구 방향
-7.1 입력의 의미를 고려하는 Directed Fuzzing
+---
+
+## 7. 내가 생각하는 후속 연구 방향
+
+### 7.1 입력의 의미를 고려하는 Directed Fuzzing
+
 가장 먼저 생각해 볼 수 있는 방향은 입력의 구조나 의미를 활용하는 퍼징이다.
 
 기존 AFLGo는 코드상 거리 정보를 활용하지만, 입력이 어떤 기능을 수행하도록 설계되어 있는지는 직접적으로 분석하지 않는다.
@@ -251,7 +319,9 @@ AFLGo는 초기 Seed를 기반으로 입력을 변형하기 때문에 Seed의 �
 따라서 자연어 또는 구조화된 명령을 입력받는 프로그램에서는 입력의 의미와 실행 결과를 함께 평가하는 방식으로 확장할 수 있을 것이다.
 
 특히 LLM 에이전트에서 자연어 의미를 활용하는 AgentFuzz는 이러한 방향의 확장 사례라고 볼 수 있다.
-7.2 동적인 Seed Scheduling
+
+### 7.2 동적인 Seed Scheduling
+
 또 다른 방향은 고정된 시간 기반 스케줄링 대신 실제 탐색 결과를 활용하는 것이다.
 
 예를 들어 특정 Seed를 반복적으로 변형했지만 새로운 경로가 발견되지 않는다면, 목표와 가깝더라도 해당 Seed에 할당하는 자원을 줄일 수 있다.
@@ -260,7 +330,10 @@ AFLGo는 초기 Seed를 기반으로 입력을 변형하기 때문에 Seed의 �
 
 이를 통해 단순한 거리뿐 아니라 탐색 효율성까지 고려하는 퍼징이 가능할 것이다.
 
-8. 결론 및 느낀 점
+---
+
+## 8. 결론 및 느낀 점
+
 이 논문을 읽으며 가장 인상적이었던 부분은 기존 Greybox Fuzzing의 높은 실행 효율성을 유지하면서 특정 목표를 향해 탐색을 유도했다는 점이다.
 
 처음에는 목표 코드에 가까운 Seed만 선택하면 Directed Fuzzing을 구현할 수 있을 것이라고 생각했다. 그러나 논문을 읽으며 가까운 Seed에만 집중하면 다른 실행 경로를 발견할 기회를 잃을 수 있다는 문제를 알게 되었다.
@@ -273,10 +346,14 @@ AFLGo는 초기 Seed를 기반으로 입력을 변형하기 때문에 Seed의 �
 
 이러한 관점에서 AgentFuzz를 다시 살펴보면, AgentFuzz가 기존 Directed Greybox Fuzzing에 Semantic Score와 LLM 기반 입력 변형을 추가한 이유를 이해할 수 있다.
 
-결과적으로 이 논문은 무작위 입력을 반복하는 퍼징에서 벗어나, 목표 코드와의 거리 및 실행 피드백을 활용하여 퍼징을 효율적으로 유도할 수 있음을 보여준 연구라고 생각한다.
+결과적으로 이 논문은 **무작위 입력을 반복하는 퍼징에서 벗어나, 목표 코드와의 거리 및 실행 피드백을 활용하여 퍼징을 효율적으로 유도할 수 있음을 보여준 연구**라고 생각한다.
 
-참고 자료
-1. Böhme, M., Pham, V.-T., Nguyen, M.-D., & Roychoudhury, A. (2017). Directed Greybox Fuzzing. ACM CCS 2017.
+---
+
+## 참고 자료
+
+1. Böhme, M., Pham, V.-T., Nguyen, M.-D., & Roychoudhury, A. (2017). *Directed Greybox Fuzzing.* ACM CCS 2017.  
    https://doi.org/10.1145/3133956.3134020
-2. AFLGo 공식 구현
+
+2. AFLGo 공식 구현  
    https://github.com/aflgo/aflgo
