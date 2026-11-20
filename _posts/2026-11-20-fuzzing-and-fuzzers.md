@@ -8,7 +8,7 @@ tags: [writing, documentation, reproducibility]
 toc: true
 ---
 
-# Fuzzing이란? 퍼징의 종류와 주요 Fuzzer 비교
+# Fuzzing의 종류와 주요 Fuzzer 비교
 
 ## 1. 들어가며
 
