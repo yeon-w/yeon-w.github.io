@@ -8,13 +8,6 @@ tags: [writing, documentation, reproducibility]
 toc: true
 ---
 
----
-title: "Fuzzing이란? 퍼징의 종류와 주요 Fuzzer 비교"
-date: 2026-11-20
-categories: [개발]
-tags: [Security, Fuzzing, AFL++, Jackalope, libFuzzer, Honggfuzz]
----
-
 # Fuzzing이란? 퍼징의 종류와 주요 Fuzzer 비교
 
 ## 1. 들어가며
