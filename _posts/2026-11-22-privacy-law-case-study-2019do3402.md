@@ -1,4 +1,12 @@
-
+---
+layout: post
+title: "개인정보보호법 판례 분석"
+date: 2026-11-22 00:00:00 +0900
+description: "대법원 2024. 6. 17. 선고 2019도3402 판결 분석"
+categories: ['블로그/기술문서']
+tags: [writing, documentation, reproducibility, research, law]
+toc: true
+---
 
 # 개인정보를 불법으로 구매시 받는 처벌
 ### 대법원 2024. 6. 17. 선고 2019도3402 판결 분석
